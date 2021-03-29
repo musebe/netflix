@@ -1,4 +1,4 @@
-import { getAllThumbnails } from '../../utils/cloudinary';
+import { getAllThumbnails, postThumbnail } from '../../utils/cloudinary';
 
 async function handler(req, res) {
   if (req.method === 'GET') {
@@ -9,6 +9,14 @@ async function handler(req, res) {
       //console.log(thumbnailData);
     } catch (error) {
       res.status(500).json({ message: 'Getting images failed.' });
+    }
+  } else if (req.method === 'POST') {
+    try {
+      const thumbnail = await postThumbnail(req.body);
+      res.status(200).json(thumbnail);
+      console.log(thumbnail);
+    } catch (error) {
+      res.status(500).json({ message: 'Posting video failed.' });
     }
   }
 }

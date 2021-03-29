@@ -16,7 +16,7 @@ async function handler(req, res) {
       res.status(200).json(record);
       //console.log(record);
     } catch (error) {
-      res.status(500).json({ message: 'Failed posting videos.' });
+      res.status(500).json({ message: 'Failed posting video to airtable.' });
     }
   }
 }
