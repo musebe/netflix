@@ -1,5 +1,5 @@
 import cloudinary from 'cloudinary';
-
+const fs = require('fs');
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -21,25 +21,21 @@ export async function getAllThumbnails() {
   return thumbnailData;
 }
 
-export async function postVideos(obj) {
+export async function postVideos(file) {
   // Post Videos to Cloudinary
-  const { file } = obj;
-  const video = await cloudinary.v2.uploader.upload(
-    'https://res.cloudinary.com/hackit-africa/video/upload/v1616975886/sample.mp4',
-    {
-      resource_type: 'video',
-      upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
-    }
-  );
+  const video = await cloudinary.v2.uploader.upload(file, {
+    resource_type: 'video',
+    upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+  });
+  fs.unlinkSync(file)
   return video;
 }
-
-export async function postThumbnail() {
-  const thumbnail = await cloudinary.v2.uploader.upload(
-    'https://res.cloudinary.com/hackit-africa/image/upload/v1617011402/dcybhwfvjoblrx3v1krq.jpg',
-    {
-      upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
-    }
-  );
+export async function postThumbnail(file) {
+  const thumbnail = await cloudinary.v2.uploader.upload(file, {
+    upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+  });
+  fs.unlinkSync(file)
+    
   return thumbnail;
+
 }

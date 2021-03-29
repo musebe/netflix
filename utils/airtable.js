@@ -36,3 +36,4 @@ export async function postVideo(obj) {
 
   return record;
 }
+
